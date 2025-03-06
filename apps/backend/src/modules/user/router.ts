@@ -1,7 +1,6 @@
 import { FastifyInstance } from "fastify";
 
-import * as controllers from "./controller";
-
+import userApiHandler from "./api.handler";
 async function userRouter(fastify: FastifyInstance) {
   fastify.post(
     "/login",
@@ -20,7 +19,7 @@ async function userRouter(fastify: FastifyInstance) {
         description: "User login endpoint",
       },
     },
-    controllers.login,
+    userApiHandler.login.bind(userApiHandler),
   );
 }
 

@@ -6,9 +6,11 @@ import formbody from "@fastify/formbody";
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
 
-import userRouter from "./modules/user/router";
 import { loadConfig, infras } from "./configs/env.config";
 import { utils } from "./utils";
+
+import userRouter from "./modules/user/router";
+import productRouter from "./modules/product/router";
 
 loadConfig();
 
@@ -26,7 +28,9 @@ const startServer = async () => {
     production: true,
     test: false,
   };
-  const server = fastify({ logger: envToLogger[infras.NODE_ENV] ?? true });
+  const server = fastify({
+    logger: envToLogger[infras.NODE_ENV] ?? true,
+  });
 
   // Register middlewares
   server.register(formbody);
@@ -35,6 +39,7 @@ const startServer = async () => {
 
   // Register routes
   server.register(userRouter, { prefix: "/api/user" });
+  server.register(productRouter, { prefix: "/api/product" });
 
   // Set error handler
   server.setErrorHandler((error, _request, reply) => {
