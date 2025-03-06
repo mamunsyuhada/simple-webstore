@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "lib": [
+      "ESNext"
+    ],
+    "module": "NodeNext",
+    "target": "ES2023",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "incremental": true,
+    "noImplicitAny": false,
+    "moduleResolution": "NodeNext",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "config/*": ["config/*"]
+    },
+    "types": ["node", "jest"]
+  },
+  "include": ["src", "test"],
+  "exclude": ["node_modules", "dist", "coverage"]
+}

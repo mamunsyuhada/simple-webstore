@@ -1,0 +1,16 @@
+x-environment:
+  &default-environment
+  POSTGRES_USER: vscode
+  POSTGRES_PASSWORD: notsecure
+  POSTGRES_DB: simplewebstore
+services:
+  pg:
+    image: "postgres:16"
+    restart: unless-stopped
+    environment: *default-environment
+    ports:
+      - 15432:5432
+    volumes:
+      - pg-data:/var/lib/postgresql/data/
+volumes:
+  pg-data:
