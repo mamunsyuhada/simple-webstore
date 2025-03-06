@@ -1,9 +1,10 @@
-import path from 'path';
-import Joi from 'joi';
-import dotenv from 'dotenv';
+import path from "path";
+
+import Joi from "joi";
+import dotenv from "dotenv";
 
 export function loadConfig(): void {
-  const envPath = path.join(__dirname, '..', '..', '.env');
+  const envPath = path.join(__dirname, "..", "..", ".env");
   const result = dotenv.config({ path: envPath });
 
   if (result.error) {
@@ -14,10 +15,10 @@ export function loadConfig(): void {
 
   const schema = Joi.object({
     NODE_ENV: Joi.string()
-      .valid('development', 'testing', 'production')
+      .valid("development", "testing", "production")
       .required(),
     LOG_LEVEL: Joi.string()
-      .valid('debug', 'info', 'warn', 'error', 'fatal')
+      .valid("debug", "info", "warn", "error", "fatal")
       .required(),
     API_HOST: Joi.string().required(),
     API_PORT: Joi.number().required(),

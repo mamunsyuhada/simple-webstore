@@ -1,26 +1,26 @@
 export const STANDARD = {
   OK: {
-    message: 'OK',
+    message: "OK",
     statusCode: 200,
   },
   CREATED: {
-    message: 'Created',
+    message: "Created",
     statusCode: 201,
   },
   ACCEPTED: {
-    message: 'Accepted',
+    message: "Accepted",
     statusCode: 202,
   },
   NO_CONTENT: {
-    message: 'No Content',
+    message: "No Content",
     statusCode: 204,
   },
   RESET_CONTENT: {
-    message: 'Reset Content',
+    message: "Reset Content",
     statusCode: 205,
   },
   PARTIAL_CONTENT: {
-    message: 'Partial Content',
+    message: "Partial Content",
     statusCode: 206,
   },
 } as const;
