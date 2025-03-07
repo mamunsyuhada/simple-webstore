@@ -19,6 +19,11 @@ export const ERRORS = {
   invalidRequest: new AppError("Invalid request", 400),
   internalServerError: new AppError("Internal Server Error", 500),
   unauthorizedAccess: new AppError("Unauthorized access", 401),
+
+  productNotExists: new AppError("Product not exists", 404),
+  stockNotEnough: new AppError("Stock not enough", 400),
+  insufficientStock: new AppError("Insufficient stock", 400),
+  cartLimitExceeded: new AppError("Cart limit exceeded", 400),
 };
 
 export function handleServerError(reply: FastifyReply, error: any) {

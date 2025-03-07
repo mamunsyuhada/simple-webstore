@@ -1,6 +1,17 @@
 import knex from "../../helpers/pg.conn";
 
 class ProductRepository {
+  async getProductById(id: string) {
+    const productQuery = `
+      SELECT * FROM products WHERE id = ?
+    `;
+    const productResult = await knex.raw(productQuery, [id]);
+    if (!productResult.rows.length) {
+      return null;
+    }
+    return productResult.rows[0];
+  }
+
   async getPaginatedProducts(limit: number, offset: number) {
     const productsQuery = `
       SELECT * FROM products

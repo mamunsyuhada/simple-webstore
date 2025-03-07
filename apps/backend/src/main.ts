@@ -11,6 +11,7 @@ import { utils } from "./utils";
 
 import userRouter from "./modules/user/router";
 import productRouter from "./modules/product/router";
+import stockAdjustmentRouter from "./modules/stockadjustment/router";
 
 loadConfig();
 
@@ -40,6 +41,7 @@ const startServer = async () => {
   // Register routes
   server.register(userRouter, { prefix: "/api/user" });
   server.register(productRouter, { prefix: "/api/product" });
+  server.register(stockAdjustmentRouter, { prefix: "/api/stock-adjustment" });
 
   // Set error handler
   server.setErrorHandler((error, _request, reply) => {

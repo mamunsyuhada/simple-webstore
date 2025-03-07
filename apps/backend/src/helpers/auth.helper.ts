@@ -6,7 +6,7 @@ import userService from "../modules/user/service";
 export const checkValidRequest = async (
   request: FastifyRequest,
   reply: FastifyReply,
-) => {
+): Promise<void> => {
   try {
     const token = utils.getTokenFromHeader(request.headers.authorization);
     if (!token) {
@@ -21,8 +21,6 @@ export const checkValidRequest = async (
         .code(ERRORS.unauthorizedAccess.statusCode)
         .send({ message: ERRORS.unauthorizedAccess.message });
     }
-
-    request["authUser"] = decoded;
   } catch (error) {
     return reply
       .code(ERRORS.internalServerError.statusCode)
@@ -56,7 +54,11 @@ export const checkValidUser = async (
         .send({ message: ERRORS.unauthorizedAccess.message });
     }
 
-    request["authUser"] = userData;
+    if (!request.body) {
+      request.body = {};
+    }
+
+    request.body["authUser"] = userData;
   } catch (error) {
     return reply
       .code(ERRORS.internalServerError.statusCode)
