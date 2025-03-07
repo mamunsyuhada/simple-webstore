@@ -12,6 +12,7 @@ import { utils } from "./utils";
 import userRouter from "./modules/user/router";
 import productRouter from "./modules/product/router";
 import stockAdjustmentRouter from "./modules/stockadjustment/router";
+import cartRouter from "./modules/cart/router";
 
 loadConfig();
 
@@ -42,6 +43,7 @@ const startServer = async () => {
   server.register(userRouter, { prefix: "/api/user" });
   server.register(productRouter, { prefix: "/api/product" });
   server.register(stockAdjustmentRouter, { prefix: "/api/stock-adjustment" });
+  server.register(cartRouter, { prefix: "/api/cart" });
 
   // Set error handler
   server.setErrorHandler((error, _request, reply) => {
