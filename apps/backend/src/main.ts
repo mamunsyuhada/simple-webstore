@@ -5,6 +5,7 @@ import fastify, { FastifyInstance } from "fastify";
 import formbody from "@fastify/formbody";
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
+import localize from "ajv-i18n"
 
 import { loadConfig, infras } from "./configs/env.config";
 import { utils } from "./utils";
@@ -50,8 +51,19 @@ const startServer = async () => {
 
   // Set error handler
   server.setErrorHandler((error, _request, reply) => {
-    server.log.error(error);
-    reply.status(500).send({ error: "Something went wrong" });
+    if (error.validation) {
+      localize.en(error.validation);
+      reply.status(400).send({
+        message: "Validation failed",
+        errors: error.validation
+      });
+      return;
+    }
+
+    reply.status(500).send({
+      message: "Internal Server Error",
+      error: error.message
+    });
   });
 
   // Health check route
