@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import fastify from "fastify";
+import fastify, { FastifyInstance } from "fastify";
 import formbody from "@fastify/formbody";
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
@@ -13,6 +13,7 @@ import userRouter from "./modules/user/router";
 import productRouter from "./modules/product/router";
 import stockAdjustmentRouter from "./modules/stockadjustment/router";
 import cartRouter from "./modules/cart/router";
+import orderRouter from "./modules/order/router";
 
 loadConfig();
 
@@ -30,7 +31,8 @@ const startServer = async () => {
     production: true,
     test: false,
   };
-  const server = fastify({
+
+  const server: FastifyInstance = fastify({
     logger: envToLogger[infras.NODE_ENV] ?? true,
   });
 
@@ -44,6 +46,7 @@ const startServer = async () => {
   server.register(productRouter, { prefix: "/api/product" });
   server.register(stockAdjustmentRouter, { prefix: "/api/stock-adjustment" });
   server.register(cartRouter, { prefix: "/api/cart" });
+  server.register(orderRouter, { prefix: "/api/order" });
 
   // Set error handler
   server.setErrorHandler((error, _request, reply) => {

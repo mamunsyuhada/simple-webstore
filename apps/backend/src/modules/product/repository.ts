@@ -1,6 +1,15 @@
 import knex from "../../helpers/pg.conn";
 
 class ProductRepository {
+  async updateStock(productId: string, newStock: number) {
+    const query = `
+      UPDATE products
+      SET stock = ?
+      WHERE id = ?
+    `;
+    await knex.raw(query, [newStock, productId]);
+  }
+
   async getProductById(id: string) {
     const productQuery = `
       SELECT * FROM products WHERE id = ?

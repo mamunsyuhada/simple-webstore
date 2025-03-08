@@ -3,8 +3,8 @@ import productService from "../product/service";
 import { AppError, ERRORS } from "../../helpers/error.helper";
 
 class CartService {
-  async clearCart(userId: string) {
-    await cartRepository.removeCartByUser(userId);
+  async clearCartById(id: string) {
+    await cartRepository.clearCartById(id);
   }
 
   async updateAndInsert(userId: string, productId: string, quantity: number) {
@@ -64,9 +64,14 @@ class CartService {
           ...item,
           product,
         };
-      })
+      }),
     );
     return detailedCartItems;
+  }
+
+  async getCartItemsByCartId(cartId: string) {
+    const cartItem = await cartRepository.getCartItemsByCartId(cartId);
+    return cartItem;
   }
 }
 

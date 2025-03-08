@@ -28,12 +28,12 @@ class CartRepository {
     await knex.raw(query, [id]);
   }
 
-  async removeCartByUser(userId: string) {
+  async clearCartById(id: string) {
     const query = `
       DELETE FROM cart_items
-      WHERE user_id = ?
+      WHERE id = ?
     `;
-    await knex.raw(query, [userId]);
+    await knex.raw(query, [id]);
   }
 
   async getCartItems(userId: string) {
@@ -42,6 +42,17 @@ class CartRepository {
       WHERE user_id = ?
     `;
     const result = await knex.raw(query, [userId]);
+    return result.rows;
+  }
+
+  async getCartItemsByCartId(cartId: string) {
+    const query = `
+      SELECT ci.*, p.title, p.price, p.description
+      FROM cart_items ci
+      JOIN products p ON ci.product_id = p.id
+      WHERE ci.id = ?
+    `;
+    const result = await knex.raw(query, [cartId]);
     return result.rows;
   }
 }
