@@ -2,6 +2,7 @@
 
 - apps/backend : http://localhost:3001/
 - apps/frontend : http://localhost:3000/
+- api-documentation : http://localhost:3001/documentation
 
 # How to run it
 
@@ -32,3 +33,4 @@ pnpm install && pnpm run dev
 
 ![images](.imgs/frontend.png)
 ![images](.imgs/login.png)
+![images](.imgs/swagger.png)

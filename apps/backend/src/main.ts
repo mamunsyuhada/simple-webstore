@@ -37,6 +37,23 @@ const startServer = async () => {
     logger: envToLogger[infras.NODE_ENV] ?? true,
   });
 
+  server.register(import('@fastify/swagger'));
+  server.register(import('@fastify/swagger-ui'), {
+    routePrefix: '/documentation',
+    uiConfig: {
+      docExpansion: 'full',
+      deepLinking: false
+    },
+    uiHooks: {
+      onRequest: function (_request, _reply, next) { next() },
+      preHandler: function (_request, _reply, next) { next() }
+    },
+    staticCSP: true,
+    transformStaticCSP: (header) => header,
+    transformSpecification: (swaggerObject, _request, _reply) => { return swaggerObject },
+    transformSpecificationClone: true,
+  });
+
   // Register middlewares
   server.register(formbody);
   server.register(cors);
