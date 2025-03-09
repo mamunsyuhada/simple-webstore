@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { AxiosConfigType } from "../type";
 
-const AxiosConfig = ({ token, isFormData }: AxiosConfigType): AxiosInstance => {
+const AxiosConfig = ({ token }: AxiosConfigType): AxiosInstance => {
   return axios.create({
     /** @API_CONFIG */
     baseURL: process.env.NEXT_PUBLIC_CLIENT_API,

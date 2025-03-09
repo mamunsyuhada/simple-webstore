@@ -12,10 +12,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import AuthService from "@/view-model/auth/services/service"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cookies from "@/services/cookies"
-import { jwtDecode } from "jwt-decode"
 import { useRouter } from "next/navigation"
+import { jwtDecode } from "jwt-decode"
 
 export function LoginForm({
   className,
@@ -24,6 +24,7 @@ export function LoginForm({
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -31,22 +32,32 @@ export function LoginForm({
     try {
       const { result, error } = await AuthService.login(payload);
       if (error) {
-        alert(`Login failed: ${error}`);
-        console.error("Login failed:", error);
+        setErrorMessage(error.response.data.message);
+        console.error("Login failed:", error.response.data.message);
       } else {
         console.log("Login successful:", result);
-        cookies.set("access_token", result.token);
-
-        // Decode the JWT token
-        const decodedToken: { role: string } = jwtDecode(result.token);
-        if(decodedToken.role==='admin'){
-          router.push('/dashboard')
+        if (result) {
+          cookies.set("access_token", result.token);
+          // Decode the JWT token
+          const decodedToken: { role: string } = jwtDecode(result.token);
+          if(decodedToken.role==='admin'){
+            router.push('/admin')
+          } else {
+            router.push('/client')
+          }
         }
       }
     } catch (err) {
+      setErrorMessage("An unexpected error occurred. Please try again.");
       console.error("An unexpected error occurred:", err);
     }
   };
+
+  useEffect(() => {
+    if(cookies.get("access_token")){
+      router.push('/admin')
+    }
+  });
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -58,7 +69,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={onLogin}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -81,7 +92,12 @@ export function LoginForm({
                   required
                 />
               </div>
-              <Button onClick={onLogin} type="submit" className="w-full">
+              {errorMessage && (
+                <div className="text-red-500 text-sm">
+                  {errorMessage}
+                </div>
+              )}
+              <Button type="submit" className="w-full">
                 Login
               </Button>
             </div>

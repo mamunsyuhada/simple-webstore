@@ -1,11 +1,11 @@
-import { LoginServicePayload } from "../type";
+import { ErrorResponse, LoginResponse, LoginPayload } from "../type";
 import HTTP from "@/lib/API/HTTP";
 
 class AuthService {
-
-  public static async login(payload: LoginServicePayload){
+  public static async login(payload: LoginPayload): Promise<LoginResponse | ErrorResponse | any>{
     const url = '/user/login';
-    return await HTTP.post(url, payload, false);
+    const res = await HTTP.post(url, payload, false);
+    return res;
   }
 }
 

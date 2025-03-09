@@ -3,7 +3,7 @@ export type AxiosConfigType = {
   isFormData?: boolean;
 };
 
-export type ResponseSuccess<T, P = any> = {
+export type ResponseSuccess<T> = {
   status: number;
   status_code: number;
   message: string;
@@ -14,6 +14,7 @@ export type ResponseSuccess<T, P = any> = {
 };
 
 export type ResponseFailed = {
+  response: unknown;
   status_code: number;
   message: string;
   exc_type: string;
@@ -22,19 +23,28 @@ export type ResponseFailed = {
   _server_messages: string;
 };
 
-export type Response<T, P = any> = {
-  result: ResponseSuccess | null;
-  error: any | null;
+export type Response<T, P> = {
+  data: LoginResponse;
+  ok: any;
+  result: ResponseSuccess<T, P> | null;
+  error: ResponseFailed | null;
 };
 
 export type RequestBody =
   | FormData
   | {
-      [key: string]: any;
+      [key: string];
     };
 
 export type requestParams = {
   [key: string]: number | string | number[] | string[];
 };
 
-export type ResponseError = {};
+export type ResponseError = {
+  status_code: number;
+  message: string;
+  exc_type: string;
+  exception: string;
+  exc: string;
+  _server_messages: string;
+};
