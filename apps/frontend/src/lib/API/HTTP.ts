@@ -1,25 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Cookies from "@/services/cookies";
 import AxiosConfig from "./config";
-import { RequestBody, Response, ResponseFailed, requestParams } from "./type";
+import { RequestBody, ResponseFailed, requestParams } from "./type";
 
 class HTTP {
-  public static async get<T>(
+  public static async get(
     url: string,
     query?: requestParams
-  ): Promise<Response<T, unknown>> {
+  ): Promise<any> {
     const token =
       typeof window !== "undefined" ? Cookies.get("access_token") : undefined;
 
     try {
       const { data } = await AxiosConfig({
         token,
-      }).get<Response<T, unknown>>(url, { params: query });
+      }).get(url, { params: query });
 
       return {
         result: { ...data },
         error: null,
       };
-    } catch (error: unknown) {
+    } catch (error: any) {
       return { result: null, error: error as ResponseFailed };
     }
   }
@@ -30,7 +31,7 @@ class HTTP {
     isAuth: boolean = true,
     asFormData?: boolean,
     keyUnite?: keyof T
-  ): Promise<Response<T, unknown>> {
+  ): Promise<any> {
     const token =
       typeof window !== "undefined" ? Cookies.get("access_token") : undefined;
 
@@ -56,56 +57,52 @@ class HTTP {
       const { data } = await AxiosConfig({
         ...(isAuth ? { token } : {}),
         ...(asFormData ? { isFormData: true } : {}),
-      }).post<Response<T, unknown>>(url, actualBody);
+      }).post(url, actualBody);
 
       return {
         result: { ...data },
         error: null,
       };
-    } catch (error: unknown) {
+    } catch (error: any) {
       return { result: null, error: error as ResponseFailed };
     }
   }
 
-  public static async put<T>(
+  public static async put(
     url: string,
     body?: RequestBody
-  ): Promise<Response<T, unknown>> {
+  ): Promise<any> {
     const token =
       typeof window !== "undefined" ? Cookies.get("token") : undefined;
 
     try {
       const { data } = await AxiosConfig({
         token,
-      }).put<Response<T, unknown>>(url, body);
+      }).put<any>(url, body);
 
       return {
         result: { ...data },
         error: null,
       };
-    } catch (error: unknown) {
+    } catch (error: any) {
       return { result: null, error: error as ResponseFailed };
     }
   }
 
-  public static async patch<T>(
+  public static async patch(
     url: string,
     body?: RequestBody
-  ): Promise<Response<T, unknown>> {
+  ): Promise<any> {
 
-    const { data } = await AxiosConfig({}).patch<
-      Response<T, unknown>
-    >(url, body);
+    const { data } = await AxiosConfig({}).patch(url, body);
     return {
       ...data,
     };
   }
 
-  public static async delete<T>(url: string): Promise<Response<T, unknown>> {
+  public static async delete(url: string): Promise<any> {
 
-    const { data } = await AxiosConfig({}).delete<
-      Response<T, unknown>
-    >(url);
+    const { data } = await AxiosConfig({}).delete(url);
     return {
       ...data,
     };

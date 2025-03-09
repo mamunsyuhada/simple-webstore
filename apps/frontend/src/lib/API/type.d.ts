@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type AxiosConfigType = {
   token?: string | null;
   isFormData?: boolean;
@@ -23,12 +24,6 @@ export type ResponseFailed = {
   _server_messages: string;
 };
 
-export type Response<T, P> = {
-  data: LoginResponse;
-  ok: any;
-  result: ResponseSuccess<T, P> | null;
-  error: ResponseFailed | null;
-};
 
 export type RequestBody =
   | FormData

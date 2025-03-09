@@ -3,10 +3,6 @@ export interface LoginPayload {
   password: string;
 }
 
-export interface LoginResponse {
-  token: string;
-}
-
 export interface ErrorResponse {
   response: {
     data: {

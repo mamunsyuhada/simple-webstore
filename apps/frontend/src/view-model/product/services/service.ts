@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { requestParams } from "@/lib/API/type";
 import { ErrorResponse } from "../type";
 import HTTP from "@/lib/API/HTTP";

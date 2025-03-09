@@ -12,5 +12,13 @@ services:
       - 15432:5432
     volumes:
       - pg-data:/var/lib/postgresql/data/
+  frontend:
+    build:
+      context: .
+      dockerfile: ./apps/frontend/Dockerfile
+    ports:
+      - "13000:3000"
+    environment:
+      - NEXT_PUBLIC_CLIENT_API="http://127.0.0.1:3001/api"
 volumes:
   pg-data:
