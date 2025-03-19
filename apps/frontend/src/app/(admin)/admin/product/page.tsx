@@ -1,4 +1,13 @@
+import ProductForm from "@/components/forms/product-form";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -9,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import ProductService from "@/view-model/product/services/service";
 import { IProduct } from "@/view-model/product/type";
-import { Pencil, Trash } from "lucide-react";
+import { Pencil } from "lucide-react";
 import Link from "next/link";
 
 const AdminProductPage = async ({
@@ -30,6 +39,21 @@ const AdminProductPage = async ({
 
   return (
     <div className="product-list p-4 flex flex-col items-stretch">
+      <div className="flex items-center mb-2">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="ml-auto">Create Product</Button>
+          </DialogTrigger>
+          <DialogContent className="w-full max-w-[80vw]">
+            <DialogHeader>
+              <DialogTitle>Create Product</DialogTitle>
+              <DialogDescription>Add your product here</DialogDescription>
+            </DialogHeader>
+            <ProductForm />
+          </DialogContent>
+        </Dialog>
+      </div>
+
       <Table className="w-full">
         <TableHeader className="w-full">
           <TableRow className="bg-gray-100">
@@ -37,7 +61,7 @@ const AdminProductPage = async ({
             <TableHead>Price</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Stock</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className="text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -50,12 +74,14 @@ const AdminProductPage = async ({
               <TableCell className="font-medium">{product.category}</TableCell>
               <TableCell className="font-medium">{product.stock}</TableCell>
               <TableCell className="font-medium">
-                <Button variant="default" size="icon" className="mr-1">
-                  <Pencil />
-                </Button>
-                <Button variant="destructive" size="icon" className="mr-1">
-                  <Trash />
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="default" size="icon">
+                      <Pencil />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent></DialogContent>
+                </Dialog>
               </TableCell>
             </TableRow>
           ))}

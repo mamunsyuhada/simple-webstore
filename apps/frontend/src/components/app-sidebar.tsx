@@ -54,7 +54,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <a
                       href={item.url}
-                      className={`flex items-center space-x-2 ${item.url === pathname ? "bg-black text-white" : ""}`}
+                      className={`flex items-center space-x-2 ${item.url === pathname ? "bg-primary text-primary-foreground" : ""}`}
                     >
                       <item.icon
                         className={item.title === pathname ? "text-white" : ""}

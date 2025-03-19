@@ -2,6 +2,11 @@ import { FastifyInstance } from "fastify";
 import productApiHandler from "./api.handler";
 import { checkValidUser } from "../../helpers/auth.helper";
 
+const urlPattern = {
+  type: "string",
+  format: "uri",
+};
+
 async function productRouter(fastify: FastifyInstance) {
   fastify.get(
     "/",
@@ -31,7 +36,7 @@ async function productRouter(fastify: FastifyInstance) {
             price: { type: "number" },
             description: { type: "string" },
             category: { type: "string" },
-            image: { type: "string" },
+            image: urlPattern,
           },
           required: ["title", "price", "description", "category", "image"],
         },
@@ -59,7 +64,7 @@ async function productRouter(fastify: FastifyInstance) {
             price: { type: "number" },
             description: { type: "string" },
             category: { type: "string" },
-            image: { type: "string" },
+            image: urlPattern,
           },
           required: [],
         },

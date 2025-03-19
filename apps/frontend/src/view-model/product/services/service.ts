@@ -11,6 +11,14 @@ class ProductService {
     const res = await HTTP.get(url, payload);
     return res;
   }
+
+  public static async createProduct(
+    payload: requestParams,
+  ): Promise<any | ErrorResponse> {
+    const url = "/product";
+    const res = await HTTP.post(url, payload);
+    return res;
+  }
 }
 
 export default ProductService;
