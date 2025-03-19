@@ -1,6 +1,42 @@
 import productRepository from "./repository";
 
 class ProductService {
+  async deleteProduct(id: string) {
+    return productRepository.deleteProduct(id);
+  }
+
+  async updateProduct(
+    id: string,
+    title: string,
+    price: number,
+    description: string,
+    category: string,
+    image: string,
+  ) {
+    return productRepository.updateProduct(id, {
+      title,
+      price,
+      description,
+      category,
+      image,
+    });
+  }
+  async createProduct(
+    title: string,
+    price: number,
+    description: string,
+    category: string,
+    image: string,
+  ) {
+    return await productRepository.createProduct(
+      title,
+      price,
+      description,
+      category,
+      image,
+    );
+  }
+
   async updateStock(productId: string, quantity: number) {
     // Fetch the current stock of the product
     const product = await this.getProductById(productId);

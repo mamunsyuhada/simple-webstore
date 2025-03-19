@@ -1,6 +1,74 @@
 import knex from "../../helpers/pg.conn";
 
 class ProductRepository {
+  async deleteProduct(id: string) {
+    const query = `
+      DELETE FROM products
+      WHERE id = ?
+    `;
+    await knex.raw(query, [id]);
+  }
+
+  async updateProduct(
+    id: string,
+    updates: {
+      title?: string;
+      price?: number;
+      description?: string;
+      category?: string;
+      image?: string;
+    },
+  ) {
+
+    const fields = [];
+    const values = [];
+
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value !== undefined) {  // Exclude undefined values
+        fields.push(`${key} = ?`);
+        values.push(value);
+      }
+    });
+
+    if (fields.length === 0) {
+      throw new Error("No fields to update");
+    }
+
+    const query = `
+      UPDATE products
+      SET ${fields.join(", ")}
+      WHERE id = ?
+      RETURNING *
+    `;
+    values.push(id);
+
+    const result = await knex.raw(query, values);
+
+    return result.rows[0];
+  }
+
+  async createProduct(
+    title: string,
+    price: number,
+    description: string,
+    category: string,
+    image: string,
+  ) {
+    const query = `
+      INSERT INTO products (title, price, description, category, image)
+      VALUES (?, ?, ?, ?, ?)
+      RETURNING *
+    `;
+    const result = await knex.raw(query, [
+      title,
+      price,
+      description,
+      category,
+      image,
+    ]);
+    return result.rows[0];
+  }
+
   async updateStock(productId: string, newStock: number) {
     const query = `
       UPDATE products
