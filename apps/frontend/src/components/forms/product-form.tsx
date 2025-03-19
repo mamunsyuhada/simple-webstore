@@ -58,7 +58,7 @@ const ProductForm = ({
           // location.reload();
           if (on_success) on_success();
           return;
-        }
+        },
       );
     }
   }

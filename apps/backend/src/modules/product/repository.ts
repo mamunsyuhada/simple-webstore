@@ -17,7 +17,7 @@ class ProductRepository {
       description?: string;
       category?: string;
       image?: string;
-    }
+    },
   ) {
     const fields = [];
     const values = [];
@@ -55,7 +55,7 @@ class ProductRepository {
     price: number,
     description: string,
     category: string,
-    image: string
+    image: string,
   ) {
     const query = `
       INSERT INTO products (title, price, description, category, image)
@@ -96,7 +96,7 @@ class ProductRepository {
     limit: number,
     offset: number,
     orderBy: string = "created_at",
-    order: "asc" | "desc" = "desc"
+    order: "asc" | "desc" = "desc",
   ) {
     const productsQuery = `
       SELECT * FROM products

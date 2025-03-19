@@ -18,14 +18,14 @@ class ProductService {
       description: string;
       category: string;
       image: string;
-    }
+    },
   ) {
     const url = `/product/${id}`;
     const res = await HTTP.put(url, product);
     return res;
   }
   public static async listProduct(
-    payload: requestParams
+    payload: requestParams,
   ): Promise<any | ErrorResponse> {
     const url = "/product";
     const res = await HTTP.get(url, payload);
@@ -33,7 +33,7 @@ class ProductService {
   }
 
   public static async createProduct(
-    payload: requestParams
+    payload: requestParams,
   ): Promise<any | ErrorResponse> {
     const url = "/product";
     const res = await HTTP.post(url, payload);

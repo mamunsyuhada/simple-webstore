@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, LogOut, SlidersHorizontal } from "lucide-react";
+import { Box, Home, LogOut } from "lucide-react";
 import React from "react";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -24,9 +24,9 @@ export function AppSidebar() {
   // Menu items.
   const menus = [
     {
-      title: "Stock Adjustment",
+      title: "Home",
       url: "/admin",
-      icon: SlidersHorizontal,
+      icon: Home,
     },
     {
       title: "Product Management",

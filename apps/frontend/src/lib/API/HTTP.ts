@@ -27,7 +27,7 @@ class HTTP {
     body: RequestBody,
     isAuth: boolean = true,
     asFormData?: boolean,
-    keyUnite?: keyof T
+    keyUnite?: keyof T,
   ): Promise<any> {
     const token =
       typeof window !== "undefined" ? Cookies.get("access_token") : undefined;
@@ -43,7 +43,7 @@ class HTTP {
           Object.entries(body).forEach(([key, value]) => {
             if (keyUnite === key && Array.isArray(value)) {
               value.forEach((item: string | Blob) =>
-                formData.append(key, item)
+                formData.append(key, item),
               );
             } else {
               formData.append(key, value);
