@@ -18,7 +18,6 @@ class OrderService {
     };
   }
 
-
   async getOrderDetail(id: string, userId: string) {
     const orderDetail = await orderRepository.getOrderDetail(id, userId);
     if (!orderDetail) {

@@ -21,7 +21,7 @@ export async function up(knex: Knex): Promise<void> {
         REFERENCES users(id)
         ON DELETE SET NULL
     );
-    `
+    `,
   );
 }
 
@@ -29,6 +29,6 @@ export async function down(knex: Knex): Promise<void> {
   await knex.raw(
     `
     DROP TABLE IF EXISTS stock_adjustments;
-    `
+    `,
   );
 }

@@ -1,6 +1,5 @@
 import type { Knex } from "knex";
 
-
 export async function up(knex: Knex): Promise<void> {
   await knex.raw(
     `
@@ -16,17 +15,15 @@ export async function up(knex: Knex): Promise<void> {
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
-    `
+    `,
   );
 }
 
-
 export async function down(knex: Knex): Promise<void> {
-    await knex.raw(
+  await knex.raw(
     `
     DROP EXTENSION IF EXISTS "uuid-ossp";
     DROP TABLE IF EXISTS products;
-    `
+    `,
   );
 }
-

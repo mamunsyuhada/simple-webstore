@@ -5,7 +5,7 @@ import fastify, { FastifyInstance } from "fastify";
 import formbody from "@fastify/formbody";
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
-import localize from "ajv-i18n"
+import localize from "ajv-i18n";
 
 import { loadConfig, infras } from "./configs/env.config";
 import { utils } from "./utils";
@@ -37,20 +37,26 @@ const startServer = async () => {
     logger: envToLogger[infras.NODE_ENV] ?? true,
   });
 
-  server.register(import('@fastify/swagger'));
-  server.register(import('@fastify/swagger-ui'), {
-    routePrefix: '/documentation',
+  server.register(import("@fastify/swagger"));
+  server.register(import("@fastify/swagger-ui"), {
+    routePrefix: "/documentation",
     uiConfig: {
-      docExpansion: 'full',
-      deepLinking: false
+      docExpansion: "full",
+      deepLinking: false,
     },
     uiHooks: {
-      onRequest: function (_request, _reply, next) { next() },
-      preHandler: function (_request, _reply, next) { next() }
+      onRequest: function (_request, _reply, next) {
+        next();
+      },
+      preHandler: function (_request, _reply, next) {
+        next();
+      },
     },
     staticCSP: true,
     transformStaticCSP: (header) => header,
-    transformSpecification: (swaggerObject, _request, _reply) => { return swaggerObject },
+    transformSpecification: (swaggerObject, _request, _reply) => {
+      return swaggerObject;
+    },
     transformSpecificationClone: true,
   });
 
@@ -72,14 +78,14 @@ const startServer = async () => {
       localize.en(error.validation);
       reply.status(400).send({
         message: "Validation failed",
-        errors: error.validation
+        errors: error.validation,
       });
       return;
     }
 
     reply.status(500).send({
       message: "Internal Server Error",
-      error: error.message
+      error: error.message,
     });
   });
 

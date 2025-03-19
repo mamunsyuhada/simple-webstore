@@ -4,7 +4,9 @@ import { ErrorResponse } from "../type";
 import HTTP from "@/lib/API/HTTP";
 
 class ProductService {
-  public static async listProduct(payload: requestParams): Promise<any | ErrorResponse>{
+  public static async listProduct(
+    payload: requestParams,
+  ): Promise<any | ErrorResponse> {
     const url = "/product";
     const res = await HTTP.get(url, payload);
     return res;

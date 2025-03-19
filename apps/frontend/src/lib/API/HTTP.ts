@@ -4,10 +4,7 @@ import AxiosConfig from "./config";
 import { RequestBody, ResponseFailed, requestParams } from "./type";
 
 class HTTP {
-  public static async get(
-    url: string,
-    query?: requestParams
-  ): Promise<any> {
+  public static async get(url: string, query?: requestParams): Promise<any> {
     const token =
       typeof window !== "undefined" ? Cookies.get("access_token") : undefined;
 
@@ -30,7 +27,7 @@ class HTTP {
     body: RequestBody,
     isAuth: boolean = true,
     asFormData?: boolean,
-    keyUnite?: keyof T
+    keyUnite?: keyof T,
   ): Promise<any> {
     const token =
       typeof window !== "undefined" ? Cookies.get("access_token") : undefined;
@@ -45,7 +42,9 @@ class HTTP {
           const formData = new FormData();
           Object.entries(body).forEach(([key, value]) => {
             if (keyUnite === key && Array.isArray(value)) {
-              value.forEach((item: string | Blob) => formData.append(key, item));
+              value.forEach((item: string | Blob) =>
+                formData.append(key, item),
+              );
             } else {
               formData.append(key, value);
             }
@@ -68,10 +67,7 @@ class HTTP {
     }
   }
 
-  public static async put(
-    url: string,
-    body?: RequestBody
-  ): Promise<any> {
+  public static async put(url: string, body?: RequestBody): Promise<any> {
     const token =
       typeof window !== "undefined" ? Cookies.get("token") : undefined;
 
@@ -89,11 +85,7 @@ class HTTP {
     }
   }
 
-  public static async patch(
-    url: string,
-    body?: RequestBody
-  ): Promise<any> {
-
+  public static async patch(url: string, body?: RequestBody): Promise<any> {
     const { data } = await AxiosConfig({}).patch(url, body);
     return {
       ...data,
@@ -101,7 +93,6 @@ class HTTP {
   }
 
   public static async delete(url: string): Promise<any> {
-
     const { data } = await AxiosConfig({}).delete(url);
     return {
       ...data,

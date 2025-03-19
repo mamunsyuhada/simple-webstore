@@ -84,6 +84,7 @@ async function orderRouter(fastify: FastifyInstance) {
       },
     },
     orderApiHandler.getOrders.bind(orderApiHandler),
-  );}
+  );
+}
 
 export default orderRouter;

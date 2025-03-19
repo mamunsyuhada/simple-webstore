@@ -9,7 +9,7 @@ interface ProductMeta {
   limit: number;
 }
 
-interface Product {
+interface IProduct {
   id: string;
   title: string;
   price: string;
@@ -25,7 +25,6 @@ interface ListProductResponse {
   meta: ProductMeta;
   data: Product[];
 }
-
 
 export interface ErrorResponse {
   response: {

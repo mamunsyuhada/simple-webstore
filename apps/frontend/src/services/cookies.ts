@@ -16,7 +16,7 @@ class CookieManager {
   }
 
   public set(name: string, value: string, options: CookieOptions = {}): void {
-    if (typeof document !== 'undefined') {
+    if (typeof document !== "undefined") {
       const defaultOptions = {
         path: "/",
         expires: 1,
@@ -42,7 +42,7 @@ class CookieManager {
   }
 
   public get(name: string): string | undefined {
-    if (typeof document !== 'undefined') {
+    if (typeof document !== "undefined") {
       const value = document.cookie
         .split("; ")
         .find((row) => row.startsWith(name + "="))
@@ -55,9 +55,9 @@ class CookieManager {
 
   public remove(
     name: string | string[],
-    options: Pick<CookieOptions, "path"> = {}
+    options: Pick<CookieOptions, "path"> = {},
   ): void {
-    if (typeof document !== 'undefined') {
+    if (typeof document !== "undefined") {
       if (Array.isArray(name)) {
         name.forEach((n) => this.remove(n, options));
       } else this.set(name, "", { ...options, expires: new Date(0) });
@@ -65,14 +65,17 @@ class CookieManager {
   }
 
   public getAll(): Record<string, string> {
-    if (typeof document !== 'undefined') {
-      return document.cookie.split("; ").reduce((acc, curr) => {
-        if (curr) {
-          const [name, value] = curr.split("=");
-          acc[name] = decodeURIComponent(value);
-        }
-        return acc;
-      }, {} as Record<string, string>);
+    if (typeof document !== "undefined") {
+      return document.cookie.split("; ").reduce(
+        (acc, curr) => {
+          if (curr) {
+            const [name, value] = curr.split("=");
+            acc[name] = decodeURIComponent(value);
+          }
+          return acc;
+        },
+        {} as Record<string, string>,
+      );
     }
     return {};
   }

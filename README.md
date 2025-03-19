@@ -15,7 +15,7 @@ docker-compose up -d
 ### 2. Migrate & Seed
 
 ```sh
-cd app/backend && pnpm run migrate:latest && pnpm run seed:run && cd -
+cd apps/backend && pnpm run migrate:latest && pnpm run seed:run && cd -
 ```
 
 ### 3. Run App

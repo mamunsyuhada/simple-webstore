@@ -1,6 +1,8 @@
+"use client";
+
 import { Box, LogOut, SlidersHorizontal } from "lucide-react";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 import {
   Sidebar,
@@ -15,24 +17,20 @@ import {
 import { Button } from "@/components/ui/button";
 import cookies from "@/services/cookies";
 
-// Define the props interface
-interface AppSidebarProps {
-  selectedItemMenu: string;
-}
-
-export function AppSidebar({ selectedItemMenu }: AppSidebarProps) {
+export function AppSidebar() {
   const router = useRouter();
+  const pathname = usePathname();
 
   // Menu items.
   const menus = [
     {
       title: "Stock Adjustment",
-      url: selectedItemMenu === "Stock Adjustment" ? "#" : "/stock-adjustment",
+      url: "/admin",
       icon: SlidersHorizontal,
     },
     {
-      title: "Another Menu",
-      url: "#",
+      title: "Product Management",
+      url: "/admin/product",
       icon: Box,
     },
   ];
@@ -56,9 +54,11 @@ export function AppSidebar({ selectedItemMenu }: AppSidebarProps) {
                   <SidebarMenuButton asChild>
                     <a
                       href={item.url}
-                      className={`flex items-center space-x-2 ${item.title === selectedItemMenu ? "bg-black text-white" : ""}`}
+                      className={`flex items-center space-x-2 ${item.url === pathname ? "bg-black text-white" : ""}`}
                     >
-                      <item.icon className={item.title === selectedItemMenu ? "text-white" : ""} />
+                      <item.icon
+                        className={item.title === pathname ? "text-white" : ""}
+                      />
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>
@@ -70,7 +70,11 @@ export function AppSidebar({ selectedItemMenu }: AppSidebarProps) {
 
         {/* Logout Button */}
         <div className="p-4 mt-auto">
-          <Button variant="destructive" className="w-full flex items-center gap-2" onClick={handleLogout}>
+          <Button
+            variant="destructive"
+            className="w-full flex items-center gap-2"
+            onClick={handleLogout}
+          >
             <LogOut className="w-5 h-5" />
             Logout
           </Button>

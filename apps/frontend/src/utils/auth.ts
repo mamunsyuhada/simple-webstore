@@ -12,14 +12,14 @@ export function useAuth() {
   let decodedToken: DecodedToken | null = null;
 
   if (!token) {
-    router.push('/');
+    router.push("/");
     return null;
   } else {
     decodedToken = jwtDecode<DecodedToken>(token);
   }
 
   if (decodedToken?.role !== "admin") {
-    router.push('/');
+    router.push("/");
     return null;
   }
 

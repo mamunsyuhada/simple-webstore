@@ -24,7 +24,6 @@ export type ResponseFailed = {
   _server_messages: string;
 };
 
-
 export type RequestBody =
   | FormData
   | {
