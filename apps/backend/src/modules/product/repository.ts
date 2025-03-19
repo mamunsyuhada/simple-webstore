@@ -19,12 +19,11 @@ class ProductRepository {
       image?: string;
     },
   ) {
-
     const fields = [];
     const values = [];
 
     Object.entries(updates).forEach(([key, value]) => {
-      if (value !== undefined) {  // Exclude undefined values
+      if (value !== undefined) {
         fields.push(`${key} = ?`);
         values.push(value);
       }
@@ -89,9 +88,15 @@ class ProductRepository {
     return productResult.rows[0];
   }
 
-  async getPaginatedProducts(limit: number, offset: number) {
+  async getPaginatedProducts(
+    limit: number,
+    offset: number,
+    orderBy: string = "updated_at",
+    order: "asc" | "desc" = "asc",
+  ) {
     const productsQuery = `
       SELECT * FROM products
+      ORDER BY ${orderBy} ${order}
       LIMIT ? OFFSET ?
     `;
     const products = await knex.raw(productsQuery, [limit, offset]);

@@ -62,7 +62,10 @@ const startServer = async () => {
 
   // Register middlewares
   server.register(formbody);
-  server.register(cors);
+  server.register(cors, {
+    origin: infras.NODE_ENV === "development" ? "*" : false,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  });
   server.register(helmet);
 
   // Register routes
