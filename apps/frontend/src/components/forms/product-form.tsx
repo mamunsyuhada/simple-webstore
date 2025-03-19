@@ -5,18 +5,20 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import ProductService from "@/view-model/product/services/service";
 import { toast } from "sonner";
+import { IProduct } from "@/view-model/product/type";
 
 type Props = {
   form_type?: `create` | `update`;
+  old_product?: Omit<IProduct, `created_at` | `updated_at`>;
 };
 
-const ProductForm = ({ form_type = "create" }: Props) => {
+const ProductForm = ({ form_type = "create", old_product }: Props) => {
   const [product, setProduct] = useState({
-    title: "",
-    price: 0,
-    description: "",
-    category: "",
-    image: "",
+    title: old_product?.title || "",
+    price: old_product?.price || 0,
+    description: old_product?.description || "",
+    category: old_product?.category || "",
+    image: old_product?.image || "",
   });
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -29,16 +31,29 @@ const ProductForm = ({ form_type = "create" }: Props) => {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await ProductService.createProduct(product).then((res) => {
-      console.log(res);
-      if (res.error) {
-        toast.error(res.error.message);
+    if (form_type === "create") {
+      await ProductService.createProduct(product).then((res) => {
+        if (res.error) {
+          toast.error(res.error.message);
+          return;
+        }
+        toast.success("Product created successfully");
+        location.reload();
         return;
-      }
-      toast.success("Product created successfully");
-      location.reload();
-      return;
-    });
+      });
+    } else if (form_type === "update" && old_product) {
+      await ProductService.updateProduct(old_product.id, product).then(
+        (res) => {
+          if (res.error) {
+            toast.error(res.error.message);
+            return;
+          }
+          toast.success("Product updated successfully");
+          location.reload();
+          return;
+        }
+      );
+    }
   }
 
   return (

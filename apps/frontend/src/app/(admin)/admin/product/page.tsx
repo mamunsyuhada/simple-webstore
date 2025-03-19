@@ -1,4 +1,6 @@
+import DeleteProduct from "@/components/forms/delete-product-form";
 import ProductForm from "@/components/forms/product-form";
+import UpdateProduct from "@/components/forms/update-product-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,9 +18,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
 import ProductService from "@/view-model/product/services/service";
 import { IProduct } from "@/view-model/product/type";
-import { Pencil } from "lucide-react";
 import Link from "next/link";
 
 const AdminProductPage = async ({
@@ -73,15 +75,9 @@ const AdminProductPage = async ({
               <TableCell className="font-medium">{product.price}</TableCell>
               <TableCell className="font-medium">{product.category}</TableCell>
               <TableCell className="font-medium">{product.stock}</TableCell>
-              <TableCell className="font-medium">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="default" size="icon">
-                      <Pencil />
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent></DialogContent>
-                </Dialog>
+              <TableCell className="font-medium flex justify-center gap-2">
+                <UpdateProduct product={product} />
+                <DeleteProduct product={product} />
               </TableCell>
             </TableRow>
           ))}

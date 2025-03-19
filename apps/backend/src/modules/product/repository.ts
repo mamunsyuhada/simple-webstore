@@ -17,7 +17,7 @@ class ProductRepository {
       description?: string;
       category?: string;
       image?: string;
-    },
+    }
   ) {
     const fields = [];
     const values = [];
@@ -28,6 +28,10 @@ class ProductRepository {
         values.push(value);
       }
     });
+
+    // Add updated_at field
+    fields.push("updated_at = ?");
+    values.push(new Date());
 
     if (fields.length === 0) {
       throw new Error("No fields to update");
@@ -51,7 +55,7 @@ class ProductRepository {
     price: number,
     description: string,
     category: string,
-    image: string,
+    image: string
   ) {
     const query = `
       INSERT INTO products (title, price, description, category, image)
@@ -91,8 +95,8 @@ class ProductRepository {
   async getPaginatedProducts(
     limit: number,
     offset: number,
-    orderBy: string = "updated_at",
-    order: "asc" | "desc" = "asc",
+    orderBy: string = "created_at",
+    order: "asc" | "desc" = "desc"
   ) {
     const productsQuery = `
       SELECT * FROM products
