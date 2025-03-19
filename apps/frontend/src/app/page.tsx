@@ -40,7 +40,7 @@ const LoginPage = () => {
           if (decodedToken.role === "admin") {
             router.push("/admin");
           } else {
-            router.push("/client");
+            router.push("/product");
           }
         }
       }
