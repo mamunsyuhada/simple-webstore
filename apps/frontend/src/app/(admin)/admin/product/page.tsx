@@ -1,15 +1,8 @@
+import CreateProductForm from "@/components/forms/create-product-form";
+import CreateStockAdjustment from "@/components/forms/create-stock-adjustment-form";
 import DeleteProduct from "@/components/forms/delete-product-form";
-import ProductForm from "@/components/forms/product-form";
 import UpdateProduct from "@/components/forms/update-product-form";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -42,18 +35,7 @@ const AdminProductPage = async ({
   return (
     <div className="product-list p-4 flex flex-col items-stretch">
       <div className="flex items-center mb-2">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="ml-auto">Create Product</Button>
-          </DialogTrigger>
-          <DialogContent className="w-full max-w-[80vw]">
-            <DialogHeader>
-              <DialogTitle>Create Product</DialogTitle>
-              <DialogDescription>Add your product here</DialogDescription>
-            </DialogHeader>
-            <ProductForm />
-          </DialogContent>
-        </Dialog>
+        <CreateProductForm />
       </div>
 
       <Table className="w-full">
@@ -76,6 +58,7 @@ const AdminProductPage = async ({
               <TableCell className="font-medium">{product.category}</TableCell>
               <TableCell className="font-medium">{product.stock}</TableCell>
               <TableCell className="font-medium flex justify-center gap-2">
+                <CreateStockAdjustment product={product} />
                 <UpdateProduct product={product} />
                 <DeleteProduct product={product} />
               </TableCell>

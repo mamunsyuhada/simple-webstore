@@ -20,6 +20,7 @@ import { DialogHeader } from "../ui/dialog";
 import ProductService from "@/view-model/product/services/service";
 import { toast } from "sonner";
 import { IProduct } from "@/view-model/product/type";
+import { useRouter } from "next/navigation";
 
 type Props = {
   product: IProduct;
@@ -27,6 +28,7 @@ type Props = {
 
 const DeleteProduct = ({ product }: Props) => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const handleDelete = async () => {
     await ProductService.deleteProduct(product.id).then((res) => {
@@ -35,7 +37,9 @@ const DeleteProduct = ({ product }: Props) => {
         return;
       } else {
         toast.success("Product deleted successfully");
-        location.reload();
+        // location.reload();
+        router.refresh();
+        setOpen(false);
         return;
       }
     });

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dialog,
   DialogTrigger,
@@ -6,7 +8,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Pencil } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { DialogHeader } from "../ui/dialog";
 import ProductForm from "./product-form";
@@ -23,8 +25,10 @@ type Props = {
 };
 
 const UpdateProduct = ({ product }: Props) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -45,7 +49,13 @@ const UpdateProduct = ({ product }: Props) => {
           <DialogTitle>Edit Product</DialogTitle>
           <DialogDescription>Edit your product here</DialogDescription>
         </DialogHeader>
-        <ProductForm form_type="update" old_product={product} />
+        <ProductForm
+          form_type="update"
+          old_product={product}
+          on_success={() => {
+            setOpen(false);
+          }}
+        />
       </DialogContent>
     </Dialog>
   );

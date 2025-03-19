@@ -10,9 +10,14 @@ import { IProduct } from "@/view-model/product/type";
 type Props = {
   form_type?: `create` | `update`;
   old_product?: Omit<IProduct, `created_at` | `updated_at`>;
+  on_success?: () => void;
 };
 
-const ProductForm = ({ form_type = "create", old_product }: Props) => {
+const ProductForm = ({
+  form_type = "create",
+  old_product,
+  on_success,
+}: Props) => {
   const [product, setProduct] = useState({
     title: old_product?.title || "",
     price: old_product?.price || 0,
@@ -38,7 +43,8 @@ const ProductForm = ({ form_type = "create", old_product }: Props) => {
           return;
         }
         toast.success("Product created successfully");
-        location.reload();
+        // location.reload();
+        if (on_success) on_success();
         return;
       });
     } else if (form_type === "update" && old_product) {
@@ -49,7 +55,8 @@ const ProductForm = ({ form_type = "create", old_product }: Props) => {
             return;
           }
           toast.success("Product updated successfully");
-          location.reload();
+          // location.reload();
+          if (on_success) on_success();
           return;
         }
       );
