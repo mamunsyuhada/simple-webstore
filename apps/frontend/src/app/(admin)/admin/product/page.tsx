@@ -1,6 +1,7 @@
 import CreateProductForm from "@/components/forms/create-product-form";
 import CreateStockAdjustment from "@/components/forms/create-stock-adjustment-form";
 import DeleteProduct from "@/components/forms/delete-product-form";
+import GetDetailProduct from "@/components/layouts/get-detail-product-layout";
 import UpdateProduct from "@/components/forms/update-product-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -58,6 +59,7 @@ const AdminProductPage = async ({
               <TableCell className="font-medium">{product.category}</TableCell>
               <TableCell className="font-medium">{product.stock}</TableCell>
               <TableCell className="font-medium flex justify-center gap-2">
+                <GetDetailProduct product={product} />
                 <CreateStockAdjustment product={product} />
                 <UpdateProduct product={product} />
                 <DeleteProduct product={product} />
