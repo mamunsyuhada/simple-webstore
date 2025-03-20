@@ -6,7 +6,12 @@ import { infras } from "./src/configs/env.config";
 
 const config: Knex.Config = {
   client: "pg",
-  connection: infras.DATABASE_URL,
+  connection: {
+    connectionString: infras.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  },
   migrations: {
     directory: "./db/migrations",
     extension: "ts",
