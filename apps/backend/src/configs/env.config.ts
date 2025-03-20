@@ -1,18 +1,28 @@
 import path from "path";
-
+import fs from "fs";
 import Joi from "joi";
 import dotenv from "dotenv";
 
 export function loadConfig(): void {
-  const envPath = path.join(__dirname, "..", "..", ".env");
-  const result = dotenv.config({ path: envPath });
+  // Menentukan lokasi .env
+  const envPath = path.resolve(__dirname, "..", "..", ".env");
 
-  if (result.error) {
-    throw new Error(
-      `Failed to load .env file from path ${envPath}: ${result.error.message}`,
-    );
+  console.log(`Trying to load .env from: ${envPath}`);
+
+  // Cek apakah file .env tersedia sebelum dimuat
+  if (fs.existsSync(envPath)) {
+    const result = dotenv.config({ path: envPath });
+
+    if (result.error) {
+      throw new Error(
+        `Failed to load .env file from path ${envPath}: ${result.error.message}`
+      );
+    }
+
+    console.log(".env file loaded successfully.");
+  } else {
+    console.warn(".env file not found! Using environment variables.");
   }
-
   const schema = Joi.object({
     NODE_ENV: Joi.string()
       .valid("development", "testing", "production")
@@ -31,7 +41,12 @@ export function loadConfig(): void {
   if (error) {
     throw new Error(`Config validation error: ${error.message}`);
   }
+
+  console.log("Environment variables validated successfully.");
 }
+
+// Pastikan loadConfig dipanggil sebelum mengakses environment variables
+loadConfig();
 
 export const infras = {
   DATABASE_URL: process.env.DATABASE_URL as string,
